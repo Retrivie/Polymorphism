@@ -1,61 +1,78 @@
-﻿using System;
+using System;
 
-namespace ResponsiPemrograman2710
+namespace Printer
 {
-    class Karyawan
+    public class PrinterWindows
     {
-        protected string Nik { get; set; }
-        public string Nama { get; set; }
-        public int GajiBulanan { get; set; }
-        public int NaikGaji { get; set; }
 
-
-        public Karyawan(string getNik, string getNama, int getGajiBulanan)
+        public virtual void Show()
         {
-            Nik             = getNik;
-            Nama            = getNama;
-            GajiBulanan     = getGajiBulanan;
-
-            if (getGajiBulanan < 0)
-            {
-                GajiBulanan = 0;
-            }
+            Console.WriteLine("Printer display dimension : x*y");
         }
-
-        public void GetNaikGaji()
+        public virtual void Print()
         {
-            int Bonus = GajiBulanan / NaikGaji;
-            GajiBulanan = GajiBulanan + Bonus;
-            Console.WriteLine("{0} {1}\t\t\t {2}", Nik, Nama, GajiBulanan);
-        }
-
-        public void GetKaryawan()
-        {
-            Console.WriteLine("{0} {1}\t\t\t {2}", Nik, Nama, GajiBulanan);
+            Console.WriteLine("Printer printer printing....");
         }
     }
 
+    public class Epson : PrinterWindows
+    {
+        public override void Show()
+        {
+            Console.WriteLine("Epson display dimension : 10*11");
+        }
+        public override void Print()
+        {
+            Console.WriteLine("Epson printer printing....");
+        }
+    }
+    public class Canon : PrinterWindows
+    {
+        public override void Show()
+        {
+            Console.WriteLine("Canon display dimension : 9.5*12");
+        }
+        public override void Print()
+        {
+            Console.WriteLine("Canon printer printing....");
+        }
+    }
+    public class LaserJet : PrinterWindows
+    {
+        public override void Show()
+        {
+            Console.WriteLine("LaserJet display dimension : 12*12");
+        }
+        public override void Print()
+        {
+            Console.WriteLine("LaserJet printer printing....");
+        }
+    }
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("NIK\tNama\t\t\tGaji Bulanan\n--------------------------------------------");
-            Karyawan karyawan = new Karyawan("100151" ,"Bosku", 3000000);
-            Karyawan karyawann = new Karyawan("100152", "Bosque", 2000000);
+            PrinterWindows printer;
 
-            karyawan.GetKaryawan();
-            karyawann.GetKaryawan();
+            Console.WriteLine("Pilih Printer:");
+            Console.WriteLine("1. Epson");
+            Console.WriteLine("2. Canon");
+            Console.WriteLine("3. LaserJet\n");
 
-            Console.WriteLine("\n");
-            Console.WriteLine("Asyikkkk kenaikan gaji 10%!!\n");
-            Console.WriteLine("NIK\tNama\t\t\tGaji Bulanan\n--------------------------------------------");
-            
-            karyawan.NaikGaji = 10;
-            karyawan.GetNaikGaji();
+            Console.Write("Nomor Printer [1..3]: ");
+            int nomorPrinter = Convert.ToInt32(Console.ReadLine());
 
-            karyawann.NaikGaji = 10;
-            karyawann.GetNaikGaji();
+            if (nomorPrinter == 1)
+                printer = new Epson();
+            else if (nomorPrinter == 2)
+                printer = new Canon();
+            else
+                printer = new LaserJet();
 
+            printer.Show();
+            printer.Print();
+
+            Console.ReadKey();
         }
     }
 }
